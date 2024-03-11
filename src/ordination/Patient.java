@@ -26,11 +26,11 @@ public class Patient {
         this.navn = navn;
     }
 
-    public double getVaegt(){
+    public double getVaegt() {
         return vaegt;
     }
 
-    public void setVaegt(double vaegt){
+    public void setVaegt(double vaegt) {
         this.vaegt = vaegt;
     }
 
@@ -38,13 +38,16 @@ public class Patient {
         return ordinationer;
     }
 
-    //TODO: Metoder (med specifikation) til at vedligeholde link til Ordination
-
-    @Override
-    public String toString(){
-        return navn + "  " + cprnr;
+    public void addOrdination(Ordination ordination) {
+        if (!this.ordinationer.contains(ordination)) {
+            this.ordinationer.add(ordination);
+        }
     }
 
+    @Override
+    public String toString() {
+        return navn + "  " + cprnr;
+    }
 
 
 }
