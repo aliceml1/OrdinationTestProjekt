@@ -37,7 +37,7 @@ public class Controller {
 			Patient patient, Laegemiddel laegemiddel, double antal) {
 		PN pn = new PN(startDen, slutDen, antal);
 		pn.setLaegemiddel(laegemiddel);
-		patient.addOrdination(pn);
+		// TODO tilføj ordination til patient
 		return pn;
 	}
 
@@ -53,46 +53,59 @@ public class Controller {
 			double natAntal) {
 		DagligFast dagligFast = new DagligFast(slutDen, startDen);
 		dagligFast.setLaegemiddel(laegemiddel);
-		patient.addOrdination(dagligFast);
+		// TODO patient.add ordination
 		return dagligFast;
 	}
 
-	/**
-	 * Opretter og returnerer en DagligSkæv ordination. Hvis startDato er efter
-	 * slutDato kastes en IllegalArgumentException og ordinationen oprettes ikke.
-	 * Hvis antallet af elementer i klokkeSlet og antalEnheder er forskellige kastes også en IllegalArgumentException.
-	 *
-	 * Pre: startDen, slutDen, patient og laegemiddel er ikke null
-	 * Pre: alle tal i antalEnheder > 0
-	 */
-	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
-			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
-			LocalTime[] klokkeSlet, double[] antalEnheder) {
-		DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
-		skaev.setLaegemiddel(laegemiddel);
-		return skaev;
-	}
+    /**
+     * Opretter og returnerer en DagligSkæv ordination. Hvis startDato er efter
+     * slutDato kastes en IllegalArgumentException og ordinationen oprettes ikke.
+     * Hvis antallet af elementer i klokkeSlet og antalEnheder er forskellige kastes også en IllegalArgumentException.
+     * <p>
+     * Pre: startDen, slutDen, patient og laegemiddel er ikke null
+     * Pre: alle tal i antalEnheder > 0
+     */
+    public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
+                                                  LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
+                                                  LocalTime[] klokkeSlet, double[] antalEnheder) {
+        DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
+        skaev.setLaegemiddel(laegemiddel);
+        for (int i = 0; i < 4; i++) {
+            skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
+        }
+        patient.addOrdination(skaev);
+        return skaev;
+    }
 
-	/**
-	 * En dato for hvornår ordinationen anvendes tilføjes ordinationen. Hvis
-	 * datoen ikke er indenfor ordinationens gyldighedsperiode kastes en
-	 * IllegalArgumentException
-	 * Pre: ordination og dato er ikke null
-	 */
-	public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
-		// TODO
-	}
+    /**
+     * En dato for hvornår ordinationen anvendes tilføjes ordinationen. Hvis
+     * datoen ikke er indenfor ordinationens gyldighedsperiode kastes en
+     * IllegalArgumentException
+     * Pre: ordination og dato er ikke null
+     */
+    public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
+        if (!ordination.givDosis(dato)) {
+            throw new IllegalArgumentException("dato ligger udenfor interval");
+        }
+    }
 
-	/**
-	 * Den anbefalede dosis for den pågældende patient (der skal tages hensyn
-	 * til patientens vægt). Det er en forskellig enheds faktor der skal
-	 * anvendes, og den er afhængig af patientens vægt.
-	 * Pre: patient og lægemiddel er ikke null
-	 */
-	public double anbefaletDosisPrDoegn(Patient patient, Laegemiddel laegemiddel) {
-		//TODO
-		return 0;
-	}
+    /**
+     * Den anbefalede dosis for den pågældende patient (der skal tages hensyn
+     * til patientens vægt). Det er en forskellig enheds faktor der skal
+     * anvendes, og den er afhængig af patientens vægt.
+     * Pre: patient og lægemiddel er ikke null
+     */
+    public double anbefaletDosisPrDoegn(Patient patient, Laegemiddel laegemiddel) {
+        double dosisPrVaegt = 0;
+        if (patient.getVaegt() < 25) {
+            dosisPrVaegt = laegemiddel.getEnhedPrKgPrDoegnLet();
+        } else if (patient.getVaegt() > 120) {
+            dosisPrVaegt = laegemiddel.getEnhedPrKgPrDoegnTung();
+        } else {
+            dosisPrVaegt = laegemiddel.getEnhedPrKgPrDoegnNormal();
+        }
+        return dosisPrVaegt;
+    }
 
 	/**
 	 * For et givent vægtinterval og et givent lægemiddel, hentes antallet af
