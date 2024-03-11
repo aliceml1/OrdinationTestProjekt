@@ -1,5 +1,7 @@
 package ordination;
 
+import java.util.ArrayList;
+
 public class Laegemiddel {
     private String navn;
     private double enhedPrKgPrDoegnLet;   // faktor der anvendes hvis patient vejer < 25 kg

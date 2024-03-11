@@ -2,10 +2,24 @@ package ordination;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
 
 public abstract class Ordination {
     private LocalDate startDen;
     private LocalDate slutDen;
+    private Laegemiddel laegemiddel;
+
+    public Ordination(LocalDate startDen, LocalDate slutDen) {
+        this.startDen = startDen;
+        this.slutDen = slutDen;
+    }
+
+    public void setLaegemiddel(Laegemiddel laegemiddel) {
+        if (!this.laegemiddel.equals(laegemiddel)) {
+            this.laegemiddel = laegemiddel;
+        }
+    }
+
 
     // TODO Link til Laegemiddel
     // TODO constructor (med specifikation)
