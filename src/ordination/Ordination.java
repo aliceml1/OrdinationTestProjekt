@@ -15,7 +15,7 @@ public abstract class Ordination {
     }
 
     public void setLaegemiddel(Laegemiddel laegemiddel) {
-        if (!this.laegemiddel.equals(laegemiddel)) {
+        if (this.laegemiddel == null) {
             this.laegemiddel = laegemiddel;
         }
     }

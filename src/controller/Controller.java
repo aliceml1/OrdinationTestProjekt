@@ -71,7 +71,7 @@ public class Controller {
                                                   LocalTime[] klokkeSlet, double[] antalEnheder) {
         DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
         skaev.setLaegemiddel(laegemiddel);
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < antalEnheder.length; i++) {
             skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
         }
         patient.addOrdination(skaev);
@@ -118,7 +118,7 @@ public class Controller {
         int antalOrdinationer = 0;
         for (Patient patient : storage.getAllPatienter()) {
             for (Ordination ordination : patient.getOrdinationer()) {
-                if (patient.getVaegt() > vægtStart && patient.getVaegt() < vægtSlut &&
+                if (patient.getVaegt() > vægtStart && patient.getVaegt() < vægtSlut && laegemiddel != null &&
                         laegemiddel.equals(ordination.getLaegemiddel())) {
                     antalOrdinationer++;
                 }
