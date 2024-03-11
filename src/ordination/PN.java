@@ -5,7 +5,7 @@ import java.time.LocalDate;
 public class PN extends Ordination{
 
     private double antalEnheder;
-
+    private int antalGangeGivet;
     public PN(LocalDate startDen, LocalDate slutDen) {
         super(startDen, slutDen);
     }
@@ -22,8 +22,8 @@ public class PN extends Ordination{
         if (givesDen.isAfter(getStartDen()) && givesDen.isBefore(getSlutDen()) ||
                 (givesDen.equals(getStartDen()) || (givesDen.equals(getSlutDen())))) {
             kanDosisGives = true;
+            antalGangeGivet++;
         }
-        // TODO
         return kanDosisGives;
     }
 
@@ -33,9 +33,8 @@ public class PN extends Ordination{
 
     @Override
     public String getType() {
-        return null;
+        return "PN";
     }
-
 
     public double samletDosis() {
         return getAntalEnheder() * (double) getAntalGangeGivet();
@@ -46,8 +45,7 @@ public class PN extends Ordination{
      * @return
      */
     public int getAntalGangeGivet() {
-        // TODO
-        return-1;
+        return antalGangeGivet;
     }
 
     public double getAntalEnheder() {
