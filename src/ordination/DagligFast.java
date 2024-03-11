@@ -1,5 +1,32 @@
 package ordination;
 
-public class DagligFast {
-    // TODO
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
+
+public class DagligFast extends Ordination {
+    private List<Dosis> dosisList = new ArrayList<>();
+
+    public void opretDosis(LocalTime tid, double antal) {
+        Dosis dosis = new Dosis(tid, antal);
+        dosisList.add(dosis);
+    }
+    @Override
+    public double samletDosis() {
+        double dosisTotal = 0;
+        for (Dosis dosis : dosisList) {
+            dosisTotal += dosis.getAntal();
+        }
+        return dosisTotal;
+    }
+
+    @Override
+    public double doegnDosis() {
+        return samletDosis() / (double) super.antalDage();
+    }
+
+    @Override
+    public String getType() {
+        return "Daglig fast";
+    }
 }
