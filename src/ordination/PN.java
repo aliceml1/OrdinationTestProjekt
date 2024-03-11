@@ -28,8 +28,7 @@ public class PN extends Ordination{
     }
 
     public double doegnDosis() {
-        // TODO
-        return 0.0;
+        return antalEnheder / (double) antalDage();
     }
 
     @Override
