@@ -38,8 +38,7 @@ public class PN extends Ordination{
 
 
     public double samletDosis() {
-        // TODO
-        return 0.0;
+        return getAntalEnheder() * (double) getAntalGangeGivet();
     }
 
     /**
