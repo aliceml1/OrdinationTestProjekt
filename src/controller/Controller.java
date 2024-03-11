@@ -38,7 +38,7 @@ public class Controller {
                                 Patient patient, Laegemiddel laegemiddel, double antal) {
         PN pn = new PN(startDen, slutDen, antal);
         pn.setLaegemiddel(laegemiddel);
-        // TODO tilføj ordination til patient
+        patient.addOrdination(pn);
         return pn;
     }
 
@@ -54,7 +54,7 @@ public class Controller {
                                                 double natAntal) {
         DagligFast dagligFast = new DagligFast(slutDen, startDen);
         dagligFast.setLaegemiddel(laegemiddel);
-        // TODO patient.add ordination
+        patient.addOrdination(dagligFast);
         return dagligFast;
     }
 
