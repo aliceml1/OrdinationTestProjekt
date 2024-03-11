@@ -20,10 +20,6 @@ public abstract class Ordination {
         }
     }
 
-
-    // TODO Link til Laegemiddel
-    // TODO constructor (med specifikation)
-
     public LocalDate getStartDen() {
         return startDen;
     }	
