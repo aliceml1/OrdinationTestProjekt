@@ -35,4 +35,8 @@ public class DagligSkaev extends Ordination{
     public String getType() {
         return "Daglig skæv";
     }
+
+    public List<Dosis> getDoser() {
+        return dosisList;
+    }
 }

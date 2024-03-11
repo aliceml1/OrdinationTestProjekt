@@ -41,6 +41,10 @@ public abstract class Ordination {
         return startDen.toString();
     }
 
+    public Laegemiddel getLaegemiddel() {
+        return laegemiddel;
+    }
+
     /**
      * Returnerer den totale dosis der er givet i den periode ordinationen er gyldig
      * @return

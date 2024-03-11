@@ -6,21 +6,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DagligFast extends Ordination {
-    private List<Dosis> dosisList = new ArrayList<>();
+    private Dosis[] doser = new Dosis[4];
+    private int antalDoser;
 
     public DagligFast(LocalDate startDen, LocalDate slutDen) {
         super(startDen, slutDen);
+        antalDoser = 0;
     }
 
     public void opretDosis(LocalTime tid, double antal) {
-        Dosis dosis = new Dosis(tid, antal);
-        dosisList.add(dosis);
+        if (antalDoser < 4) {
+            Dosis dosis = new Dosis(tid, antal);
+            doser[antalDoser] = dosis;
+            antalDoser++;
+        }
     }
     @Override
     public double samletDosis() {
         double dosisTotal = 0;
-        for (Dosis dosis : dosisList) {
-            dosisTotal += dosis.getAntal();
+        for (int i = 0; i < doser.length; i++) {
+            dosisTotal += doser[i].getAntal();
         }
         return dosisTotal;
     }
@@ -33,5 +38,9 @@ public class DagligFast extends Ordination {
     @Override
     public String getType() {
         return "Daglig fast";
+    }
+
+    public Dosis[] getDoser() {
+        return doser;
     }
 }
