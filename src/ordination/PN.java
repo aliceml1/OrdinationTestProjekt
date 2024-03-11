@@ -6,8 +6,9 @@ public class PN extends Ordination{
 
     private double antalEnheder;
     private int antalGangeGivet;
-    public PN(LocalDate startDen, LocalDate slutDen) {
+    public PN(LocalDate startDen, LocalDate slutDen, double antalEnheder) {
         super(startDen, slutDen);
+        this.antalEnheder = antalEnheder;
     }
 
     /**

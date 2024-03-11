@@ -4,11 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import ordination.DagligFast;
-import ordination.DagligSkaev;
-import ordination.Laegemiddel;
-import ordination.PN;
-import ordination.Patient;
+import ordination.*;
 import storage.Storage;
 
 public class Controller {
@@ -39,8 +35,10 @@ public class Controller {
 	 */
 	public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
 			Patient patient, Laegemiddel laegemiddel, double antal) {
-		// TODO
-		return null;
+		PN pn = new PN(startDen, slutDen, antal);
+		pn.setLaegemiddel(laegemiddel);
+		// TODO tilføj ordination til patient
+		return pn;
 	}
 
 	/**
@@ -53,8 +51,10 @@ public class Controller {
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			double morgenAntal, double middagAntal, double aftenAntal,
 			double natAntal) {
-		// TODO
-		return null;
+		DagligFast dagligFast = new DagligFast(slutDen, startDen);
+		dagligFast.setLaegemiddel(laegemiddel);
+		// TODO patient.add ordination
+		return dagligFast;
 	}
 
 	/**
@@ -68,8 +68,9 @@ public class Controller {
 	public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
 			LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
 			LocalTime[] klokkeSlet, double[] antalEnheder) {
-		// TODO
-		return null;
+		DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
+		skaev.setLaegemiddel(laegemiddel);
+		return skaev;
 	}
 
 	/**
@@ -134,7 +135,7 @@ public class Controller {
 
 	public Laegemiddel opretLaegemiddel(String navn,
 			double enhedPrKgPrDoegnLet, double enhedPrKgPrDoegnNormal,
-			double enhedPrKgPrDoegnTung, String enhed) {
+			double enhedPrKgPrDoegnTung, Enhed enhed) {
 		Laegemiddel lm = new Laegemiddel(navn, enhedPrKgPrDoegnLet,
 				enhedPrKgPrDoegnNormal, enhedPrKgPrDoegnTung, enhed);
 		storage.addLaegemiddel(lm);
@@ -148,10 +149,10 @@ public class Controller {
 		this.opretPatient("011064-1522", "Ulla Nielsen", 59.9);
 		this.opretPatient("090149-2529", "Ib Hansen", 87.7);
 
-		this.opretLaegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, "Styk");
-		this.opretLaegemiddel("Paracetamol", 1, 1.5, 2, "Ml");
-		this.opretLaegemiddel("Fucidin", 0.025, 0.025, 0.025, "Styk");
-		this.opretLaegemiddel("Methotrexat", 0.01, 0.015, 0.02, "Styk");
+		this.opretLaegemiddel("Acetylsalicylsyre", 0.1, 0.15, 0.16, Enhed.STYK);
+		this.opretLaegemiddel("Paracetamol", 1, 1.5, 2, Enhed.ML);
+		this.opretLaegemiddel("Fucidin", 0.025, 0.025, 0.025, Enhed.STYK);
+		this.opretLaegemiddel("Methotrexat", 0.01, 0.015, 0.02, Enhed.STYK);
 
 		this.opretPNOrdination(LocalDate.of(2021, 1, 1), LocalDate.of(2021, 1, 12),
 				storage.getAllPatienter().get(0), storage.getAllLaegemidler()
