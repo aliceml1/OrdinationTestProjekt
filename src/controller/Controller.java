@@ -87,6 +87,8 @@ public class Controller {
     public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
         if (!ordination.givDosis(dato)) {
             throw new IllegalArgumentException("dato ligger udenfor interval");
+        } else {
+            //TODO
         }
     }
 
