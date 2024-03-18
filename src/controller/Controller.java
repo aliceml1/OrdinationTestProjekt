@@ -55,6 +55,8 @@ public class Controller {
         DagligFast dagligFast = new DagligFast(slutDen, startDen);
         dagligFast.setLaegemiddel(laegemiddel);
         patient.addOrdination(dagligFast);
+
+        //TODO opret dosis
         return dagligFast;
     }
 
