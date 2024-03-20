@@ -36,10 +36,14 @@ public class Controller {
      */
     public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
                                 Patient patient, Laegemiddel laegemiddel, double antal) {
-        PN pn = new PN(startDen, slutDen, antal);
-        pn.setLaegemiddel(laegemiddel);
-        patient.addOrdination(pn);
-        return pn;
+        if (checkStartFoerSlut(startDen, slutDen)) {
+            PN pn = new PN(startDen, slutDen, antal);
+            pn.setLaegemiddel(laegemiddel);
+            patient.addOrdination(pn);
+            return pn;
+        } else {
+            throw new IllegalArgumentException("startdato skal være før slutdato");
+        }
     }
 
     /**
@@ -52,8 +56,8 @@ public class Controller {
                                                 LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
                                                 double morgenAntal, double middagAntal, double aftenAntal,
                                                 double natAntal) {
-        if (checkStartFoerSlut(startDen,slutDen)) {
-            DagligFast dagligFast = new DagligFast(slutDen, startDen);
+        if (checkStartFoerSlut(startDen, slutDen)) {
+            DagligFast dagligFast = new DagligFast(startDen, slutDen);
             dagligFast.setLaegemiddel(laegemiddel);
             patient.addOrdination(dagligFast);
             dagligFast.opretDosis(LocalTime.of(8, 00), morgenAntal);
@@ -77,13 +81,17 @@ public class Controller {
     public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
                                                   LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
                                                   LocalTime[] klokkeSlet, double[] antalEnheder) {
-        DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
-        skaev.setLaegemiddel(laegemiddel);
-        for (int i = 0; i < antalEnheder.length; i++) {
-            skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
+        if (checkStartFoerSlut(startDen, slutDen)) {
+            DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
+            skaev.setLaegemiddel(laegemiddel);
+            for (int i = 0; i < antalEnheder.length; i++) {
+                skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
+            }
+            patient.addOrdination(skaev);
+            return skaev;
+        } else {
+            throw new IllegalArgumentException("startdato skal være før slutdato");
         }
-        patient.addOrdination(skaev);
-        return skaev;
     }
 
     /**

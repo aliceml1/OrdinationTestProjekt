@@ -1,6 +1,8 @@
-package ordination;
-
 import controller.Controller;
+import ordination.DagligSkaev;
+import ordination.Enhed;
+import ordination.Laegemiddel;
+import ordination.Patient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
