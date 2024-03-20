@@ -22,12 +22,35 @@ class DagligFastTest {
     }
 
     @Test
+    void testConstructorTC1() {
+        LocalDate startdato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 18);
+        DagligFast dagligFast = new DagligFast(startdato, slutDato);
+        assertNotNull(dagligFast);
+    }
+
+    @Test
+    void testConstructorTC2() {
+        LocalDate startdato = LocalDate.of(2024, 03, 20);
+        LocalDate slutDato = LocalDate.of(2024, 03, 23);
+        DagligFast dagligFast = new DagligFast(startdato, slutDato);
+        assertNotNull(dagligFast);
+    }
+
+    @Test
+    void testConstructorTC3() {
+        Exception exception = assertThrows(IllegalArgumentException.class,
+                () -> controller.opretDagligFastOrdination(LocalDate.of(2024, 03, 17), LocalDate.of(2024, 03, 16), alice, paracetamol, 2.0, 2.0, 2.0, 2.0));
+        assertEquals(exception.getMessage(), "startdato skal være før slutdato");
+    }
+
+    @Test
     void opretDosisTC1() {
         DagligFast dagligFast = controller.opretDagligFastOrdination(LocalDate.of(2024, 03, 18), LocalDate.of(2024, 03, 21), alice, paracetamol, 2.0, 2.0, 2.0, 2.0);
-        dagligFast.opretDosis(LocalTime.of(8,00), 2.0);
-        dagligFast.opretDosis(LocalTime.of(12,00), 2.0);
-        dagligFast.opretDosis(LocalTime.of(18,00), 2.0);
-        dagligFast.opretDosis(LocalTime.of(22,00), 2.0);
+        dagligFast.opretDosis(LocalTime.of(8, 00), 2.0);
+        dagligFast.opretDosis(LocalTime.of(12, 00), 2.0);
+        dagligFast.opretDosis(LocalTime.of(18, 00), 2.0);
+        dagligFast.opretDosis(LocalTime.of(22, 00), 2.0);
         Dosis[] result = dagligFast.getDoser();
         assertEquals(2.0, result[0].getAntal());
         assertEquals(LocalTime.of(8, 00), result[0].getTid());

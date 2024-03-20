@@ -22,6 +22,21 @@ class PNTest {
     }
 
     @Test
+    void testConstructorTC1() {
+        LocalDate startdato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 18);
+        PN pn = new PN(startdato, slutDato, 2);
+        assertNotNull(pn);
+    }
+    @Test
+    void testConstructorTC2() {
+        LocalDate startdato = LocalDate.of(2024, 03, 20);
+        LocalDate slutDato = LocalDate.of(2024, 03, 23);
+        PN pn = new PN(startdato, slutDato, 2);
+        assertNotNull(pn);
+    }
+
+    @Test
     void givDosisTC1() {
         PN pn = controller.opretPNOrdination(LocalDate.of(2024, 03, 18), LocalDate.of(2024, 03, 21), alice, paracetamol, 2.0);
         boolean result = pn.givDosis(LocalDate.of(2024, 03, 18));
