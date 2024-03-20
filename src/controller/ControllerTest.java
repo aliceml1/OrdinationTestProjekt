@@ -74,21 +74,6 @@ class ControllerTest {
     }
 
     @Test
-    void opretDagligSkaevOrdinationTC3() {
-        LocalDate startDato = LocalDate.of(2024, 03, 18);
-        LocalDate slutDato = LocalDate.of(2024, 03, 21);
-        LocalTime[] klokkeslet = {LocalTime.of(10, 00), LocalTime.of(14, 00), LocalTime.of(20, 00)};
-        double[] enheder = {1.5, 1.5, 1.5};
-        DagligSkaev skaev = controller.opretDagligSkaevOrdination(startdato, slutDato, alice, paracetamol, klokkeslet, enheder);
-        assertEquals(skaev.getDoser().get(0).getAntal(), 1.5);
-        assertEquals(skaev.getDoser().get(1).getAntal(), 1.5);
-        assertEquals(skaev.getDoser().get(2).getAntal(), 1.5);
-        assertEquals(skaev.getDoser().get(0).getTid(), LocalTime.of(10, 00));
-        assertEquals(skaev.getDoser().get(1).getTid(), LocalTime.of(14, 00));
-        assertEquals(skaev.getDoser().get(2).getTid(), LocalTime.of(20, 00));
-    }
-
-    @Test
     void opretDagligSkaevOrdinationTC4() {
         LocalDate startDato = LocalDate.of(2024, 03, 18);
         LocalDate slutDato = LocalDate.of(2024, 03, 21);

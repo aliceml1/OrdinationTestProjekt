@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class DagligSkaevTest {
@@ -36,14 +39,59 @@ class DagligSkaevTest {
     }
 
     @Test
-    void opretDosis() {
+    void opretDosisTC1() {
+        LocalDate startDato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 21);
+        LocalTime[] klokkeslet = {LocalTime.of(10, 00)};
+        double[] enheder = {2.0};
+        DagligSkaev dagligSkaev = controller.opretDagligSkaevOrdination(startDato, slutDato, alice, paracetamol, klokkeslet, enheder);
+        assertEquals(dagligSkaev.getDoser().get(0).getAntal(), 2.0);
+        assertEquals(dagligSkaev.getDoser().get(0).getTid(), LocalTime.of(10, 00));
     }
 
     @Test
-    void samletDosis() {
+    void opretDosisTC2() {
+        LocalDate startDato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 21);
+        LocalTime[] klokkeslet = {LocalTime.of(8, 00), LocalTime.of(12, 00)};
+        double[] enheder = {2.0, 3.0};
+        DagligSkaev dagligSkaev = controller.opretDagligSkaevOrdination(startDato, slutDato, alice, paracetamol, klokkeslet, enheder);
+        assertEquals(dagligSkaev.getDoser().get(0).getAntal(), 2.0);
+        assertEquals(dagligSkaev.getDoser().get(1).getAntal(), 3.0);
+        assertEquals(dagligSkaev.getDoser().get(0).getTid(), LocalTime.of(8, 00));
+        assertEquals(dagligSkaev.getDoser().get(1).getTid(), LocalTime.of(12, 00));
     }
 
     @Test
-    void doegnDosis() {
+    void samletDosisTC1() {
+        LocalDate startDato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 21);
+        LocalTime[] klokkeslet = {LocalTime.of(8, 00), LocalTime.of(12, 00)};
+        double[] enheder = {2.0, 2.0};
+        DagligSkaev dagligSkaev = controller.opretDagligSkaevOrdination(startDato, slutDato, alice, paracetamol, klokkeslet, enheder);
+        double result = dagligSkaev.samletDosis();
+        assertEquals(4.0, result);
+    }
+
+    @Test
+    void doegnDosisTC1() {
+        LocalDate startDato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 21);
+        LocalTime[] klokkeslet = {LocalTime.of(8, 00), LocalTime.of(12, 00)};
+        double[] enheder = {2.0, 2.0};
+        DagligSkaev dagligSkaev = controller.opretDagligSkaevOrdination(startDato, slutDato, alice, paracetamol, klokkeslet, enheder);
+        double result = dagligSkaev.doegnDosis();
+        assertEquals(1.0, result);
+    }
+
+    @Test
+    void doegnDosisTC2() {
+        LocalDate startDato = LocalDate.of(2024, 03, 18);
+        LocalDate slutDato = LocalDate.of(2024, 03, 21);
+        LocalTime[] klokkeslet = {LocalTime.of(8, 00), LocalTime.of(12, 00)};
+        double[] enheder = {0.0, 0.0};
+        DagligSkaev dagligSkaev = controller.opretDagligSkaevOrdination(startDato, slutDato, alice, paracetamol, klokkeslet, enheder);
+        double result = dagligSkaev.doegnDosis();
+        assertEquals(0.0, result);
     }
 }
