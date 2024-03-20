@@ -53,4 +53,11 @@ public class PN extends Ordination{
         return antalEnheder;
     }
 
+    public void setAntalEnheder(double antalEnheder) {
+        this.antalEnheder = antalEnheder;
+    }
+
+    public void setAntalGangeGivet(int antalGangeGivet) {
+        this.antalGangeGivet = antalGangeGivet;
+    }
 }

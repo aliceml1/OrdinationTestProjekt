@@ -36,14 +36,10 @@ public class Controller {
      */
     public PN opretPNOrdination(LocalDate startDen, LocalDate slutDen,
                                 Patient patient, Laegemiddel laegemiddel, double antal) {
-        if (!slutDen.isBefore(startDen)) {
-            PN pn = new PN(startDen, slutDen, antal);
-            pn.setLaegemiddel(laegemiddel);
-            patient.addOrdination(pn);
-            return pn;
-        } else {
-            throw new IllegalArgumentException("startdato skal være før slutdato");
-        }
+        PN pn = new PN(startDen, slutDen, antal);
+        pn.setLaegemiddel(laegemiddel);
+        patient.addOrdination(pn);
+        return pn;
     }
 
     /**
@@ -56,18 +52,14 @@ public class Controller {
                                                 LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
                                                 double morgenAntal, double middagAntal, double aftenAntal,
                                                 double natAntal) {
-        if (!slutDen.isBefore(startDen)) {
-            DagligFast dagligFast = new DagligFast(slutDen, startDen);
-            dagligFast.setLaegemiddel(laegemiddel);
-            patient.addOrdination(dagligFast);
-            dagligFast.opretDosis(LocalTime.of(8, 00), morgenAntal);
-            dagligFast.opretDosis(LocalTime.of(12, 00), middagAntal);
-            dagligFast.opretDosis(LocalTime.of(18, 00), aftenAntal);
-            dagligFast.opretDosis(LocalTime.of(22, 00), natAntal);
-            return dagligFast;
-        } else {
-            throw new IllegalArgumentException("startdato skal være før slutdato");
-        }
+        DagligFast dagligFast = new DagligFast(slutDen, startDen);
+        dagligFast.setLaegemiddel(laegemiddel);
+        patient.addOrdination(dagligFast);
+        dagligFast.opretDosis(LocalTime.of(8,00),morgenAntal);
+        dagligFast.opretDosis(LocalTime.of(12,00),middagAntal);
+        dagligFast.opretDosis(LocalTime.of(18,00),aftenAntal);
+        dagligFast.opretDosis(LocalTime.of(22,00),natAntal);
+        return dagligFast;
     }
 
     /**
@@ -81,17 +73,13 @@ public class Controller {
     public DagligSkaev opretDagligSkaevOrdination(LocalDate startDen,
                                                   LocalDate slutDen, Patient patient, Laegemiddel laegemiddel,
                                                   LocalTime[] klokkeSlet, double[] antalEnheder) {
-        if (!slutDen.isBefore(startDen)) {
-            DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
-            skaev.setLaegemiddel(laegemiddel);
-            for (int i = 0; i < antalEnheder.length; i++) {
-                skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
-            }
-            patient.addOrdination(skaev);
-            return skaev;
-        } else {
-            throw new IllegalArgumentException("startdato skal være før slutdato");
+        DagligSkaev skaev = new DagligSkaev(startDen, slutDen);
+        skaev.setLaegemiddel(laegemiddel);
+        for (int i = 0; i < antalEnheder.length; i++) {
+            skaev.opretDosis(klokkeSlet[i], antalEnheder[i]);
         }
+        patient.addOrdination(skaev);
+        return skaev;
     }
 
     /**
