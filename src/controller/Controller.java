@@ -55,8 +55,10 @@ public class Controller {
         DagligFast dagligFast = new DagligFast(slutDen, startDen);
         dagligFast.setLaegemiddel(laegemiddel);
         patient.addOrdination(dagligFast);
-
-        //TODO opret dosis
+        dagligFast.opretDosis(LocalTime.of(8,00),morgenAntal);
+        dagligFast.opretDosis(LocalTime.of(12,00),middagAntal);
+        dagligFast.opretDosis(LocalTime.of(18,00),aftenAntal);
+        dagligFast.opretDosis(LocalTime.of(22,00),natAntal);
         return dagligFast;
     }
 
@@ -89,8 +91,6 @@ public class Controller {
     public void ordinationPNAnvendt(PN ordination, LocalDate dato) {
         if (!ordination.givDosis(dato)) {
             throw new IllegalArgumentException("dato ligger udenfor interval");
-        } else {
-            //TODO
         }
     }
 
